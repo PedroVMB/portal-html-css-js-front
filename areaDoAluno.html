@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Aluno</title>
+</head>
+<body>
+    <h1>Vídeos para Alunos</h1>
+    <div id="videosList">
+    </div>
+
+    <script>
+        fetch('http://localhost:3000/video', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (Array.isArray(data.content)) {
+                var videosList = document.getElementById("videosList");
+                data.content.forEach(video => {
+                    var videoElement = document.createElement("div");
+                    videoElement.innerHTML = `
+                        <h2>${video.titulo}</h2>
+                        <iframe width="560" height="315" src="${video.url}" frameborder="0" allowfullscreen></iframe>
+                    `;
+                    videosList.appendChild(videoElement);
+                });
+            } else {
+                console.error('Erro ao obter vídeos: Formato de resposta inválido.');
+                alert("Ocorreu um erro ao obter os vídeos. Tente novamente.");
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao obter vídeos:', error);
+            alert("Ocorreu um erro ao obter os vídeos. Tente novamente.");
+        });
+    </script>
+</body>
+</html>

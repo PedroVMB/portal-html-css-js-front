@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário de Login</title>
+</head>
+<body>
+    <h1>Formulário de Login</h1>
+    <form id="loginForm">
+        <label for="username">Email de Usuário:</label>
+        <input type="email" id="username" name="username" required><br><br>
+        
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <input type="submit" value="Entrar">
+    </form>
+    
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+          
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            
+            if (username === "aluno@teste.com" && password === "aluno") {
+                
+                window.location.href = "areaDoAluno.html";
+
+            } else if (username === "professor@teste.com" && password === "professor") {
+                
+                window.location.href = "areaDoProfessor.html";
+
+            } else if (username === "manager@teste.com" && password === "manager") {
+                
+                window.location.href = "areaDoManager.html";
+
+            } else {
+                
+                alert("Usuário ou senha incorretos. Tente novamente.");
+            
+            }
+
+        });
+    </script>
+</body>
+</html>

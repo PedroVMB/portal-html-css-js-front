@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Professor</title>
+</head>
+<body>
+    <h1>Cadastro de Professor</h1>
+    <form id="professorForm">
+        <label for="name">Nome do Professor:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">E-mail do Professor:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Senha do Professor:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Cadastrar Professor">
+    </form>
+
+    <script>
+        document.getElementById("professorForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            
+            var data = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            
+            fetch('http://localhost:3000/professor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                   
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log(data); 
+                alert("Professor cadastrado com sucesso!");
+            
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar o professor:', error);
+                alert("Ocorreu um erro ao cadastrar o professor. Tente novamente.");
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
