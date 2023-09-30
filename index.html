@@ -2,23 +2,93 @@
 <html>
 <head>
     <title>Formulário de Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <h1>Formulário de Login</h1>
-    <form id="loginForm">
-        <label for="username">Email de Usuário:</label>
-        <input type="email" id="username" name="username" required><br><br>
-        
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required><br><br>
-        
-        <input type="submit" value="Entrar">
-    </form>
+    <div class="container">
+        <form id="loginForm" class="form-group">
+            <label for="username">Email de Usuário:</label>
+            <input type="email" id="username" name="username" required>
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <input type="submit" value="Entrar">
+        </form>
+    </div>
+
+    <h1>Formulário de Cadastro</h1>
+    <div class="container">
+        <form id="cadastroForm" class="form-group">
+            <label for="usernameCadastro">Nome de Usuário:</label>
+            <input type="text" id="usernameCadastro" name="username" required>
+            
+            <label for="emailCadastro">Email de Usuário:</label>
+            <input type="email" id="emailCadastro" name="email" required>
+            
+            <label for="passwordCadastro">Senha:</label>
+            <input type="password" id="passwordCadastro" name="password" required>
+            
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
     
     <script>
         document.getElementById("loginForm").addEventListener("submit", function(event) {
             event.preventDefault(); 
-          
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
             
@@ -40,7 +110,45 @@
             
             }
 
+
+
         });
+
+
+        document.getElementById("cadastroForm").addEventListener("submit", function(event){
+            
+            event.preventDefault();
+
+            var newUsername = document.getElementById("usernameCadastro").value;
+            var email = document.getElementById("emailCadastro").value;
+            var newPassword = document.getElementById("passwordCadastro").value;
+
+            var data = {
+                nome: newUsername,
+                email: email,
+                senha: newPassword
+            };
+
+            fetch('http://localhost:3000/aluno', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log(data); 
+                alert("Aluno cadastrado com sucesso!");
+                
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar o aluno:', error);
+                alert("Ocorreu um erro ao cadastrar o aluno. Tente novamente.");
+            });
+        })
     </script>
 </body>
 </html>
